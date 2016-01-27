@@ -18,3 +18,16 @@ COMMANDS:
    purge  remove all tasks
    help, h  Shows a list of commands or help for one command
 ```
+
+## HTTP API
+Start a server
+```
+$ okgo server
+```
+Use API
+```
+GET    /api/v1/tasks         List all tasks
+GET    /api/v1/tasks/:name   Get task by name
+POST   /api/v1/tasks         Create a new task {"name": "...", "command": "..."}
+DELETE /tasks/:name          Delete a task by name
+```

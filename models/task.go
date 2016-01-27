@@ -7,8 +7,8 @@ import (
 
 // Task - task definition
 type Task struct {
-	Name    string
-	Command string
+	Name    string `json:"name"`
+	Command string `json:"command"`
 }
 
 // CreateTask - creates a Task and saves it to KV
@@ -45,6 +45,7 @@ func ListTasks() (*[]Task, error) {
 	return &t, nil
 }
 
+// GetTask - get a task by name
 func GetTask(name string) (*Task, error) {
 	var t Task
 	task, err := kv.Get("tasks/" + name)
