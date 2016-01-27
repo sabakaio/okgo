@@ -2,7 +2,7 @@ package models
 
 import (
 	"encoding/json"
-  "github.com/docker/libkv/store"
+	"github.com/docker/libkv/store"
 )
 
 // Task - task definition
@@ -20,7 +20,7 @@ func CreateTask(name string, command string) (*Task, error) {
 		return nil, err
 	}
 
-	kv.Put("tasks/" + name, jsonStr, &store.WriteOptions{IsDir: true})
+	kv.Put("tasks/"+name, jsonStr, &store.WriteOptions{IsDir: true})
 	return &task, nil
 }
 
@@ -42,5 +42,14 @@ func ListTasks() (*[]Task, error) {
 		return nil, err
 	}
 
-	return &t, nil;
+	return &t, nil
+}
+
+// RemoveTask - removes a task by name
+func RemoveTask(name string) error {
+	err := kv.Delete("tasks/" + name)
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -61,10 +61,11 @@ var CmdTask = cli.Command{
 			},
 		},
 		{
-			Name:  "remove",
+			Name:  "rm",
 			Usage: "remove an existing task",
 			Action: func(c *cli.Context) {
-				println("removed task template: ", c.Args().First())
+				models.RemoveTask(c.Args().First())
+				println("removed task ", c.Args().First())
 			},
 		},
 	},
