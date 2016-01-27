@@ -26,12 +26,12 @@ func CreateTask(name string, command string) (*Task, error) {
 
 // ListTasks - returns all tasks
 func ListTasks() (*[]Task, error) {
+	var t []Task
 	tasks, err := kv.List("tasks")
 	if err != nil {
-		return nil, err
+		return &t, nil
 	}
 
-	var t []Task
 	for _, task := range tasks {
 		var _t = Task{}
 		json.Unmarshal(task.Value, &_t)
@@ -45,9 +45,34 @@ func ListTasks() (*[]Task, error) {
 	return &t, nil
 }
 
+func GetTask(name string) (*Task, error) {
+	var t Task
+	task, err := kv.Get("tasks/" + name)
+	if err != nil {
+		return nil, err
+	}
+
+	err = json.Unmarshal(task.Value, &t)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &t, nil
+}
+
 // RemoveTask - removes a task by name
 func RemoveTask(name string) error {
 	err := kv.Delete("tasks/" + name)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// PurgeTasks - removes a task by name
+func PurgeTasks() error {
+	err := kv.DeleteTree("tasks/")
 	if err != nil {
 		return err
 	}

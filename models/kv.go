@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/docker/libkv"
 	"github.com/docker/libkv/store"
@@ -22,7 +23,7 @@ func init() {
 
 	if err != nil {
 		fmt.Println(err)
-		return
+		os.Exit(1)
 	}
 
 	kv = _kv
