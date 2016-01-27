@@ -12,6 +12,7 @@ var CmdServer = cli.Command{
 	Usage:       "start okgo server",
 	Description: `start okgo server`,
 	Action:      serverAction,
+	Aliases:     []string{"s"},
 }
 
 func serverAction(c *cli.Context) {
