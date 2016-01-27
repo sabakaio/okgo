@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"os"
 
 	// "github.com/jasonlvhit/gocron"
@@ -16,16 +15,6 @@ func init() {
 	// Register store to libkv
 	models.CreateTask("more tasks", "docker run")
 	models.CreateTask("try tasks", "ls -la")
-	// entries, _ := kv.List("tasks")
-	// for _, pair := range entries {
-	// fmt.Printf("key=%v - value=%v", pair.Key, string(pair.Value))
-	// }
-	tasks, _ := models.ListTasks()
-	println(len(*tasks))
-}
-
-func task() {
-	fmt.Println("I am runnning task.")
 }
 
 func main() {
