@@ -13,10 +13,13 @@ var CmdServer = cli.Command{
 	Description: `start okgo server`,
 	Action:      serverAction,
 	Aliases:     []string{"s"},
+	Flags: []cli.Flag{
+		stringFlag("port, p", "3000", "set port for HTTP API server"),
+	},
 }
 
 func serverAction(c *cli.Context) {
 	r := api.CreateServer()
-	r.Run(":3000")
-	println("Started server on port 3000")
+	port := string(c.String("port"))
+	r.Run(":" + port)
 }
