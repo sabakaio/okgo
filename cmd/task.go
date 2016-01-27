@@ -15,12 +15,10 @@ import (
 // CmdTask - task specific commands
 var CmdTask = cli.Command{
 	Name:        "task",
-	Usage:       "list tasks",
-	Description: `start okgo server`,
+	Aliases:     []string{"t"},
+	Usage:       "manage tasks - create, list, remove, run, purge",
+	Description: `Subcommands set for managing tasks`,
 	Action:      cli.ShowSubcommandHelp,
-	Flags: []cli.Flag{
-		stringFlag("config, c", "custom/conf/app.yml", "Custom configuration file path"),
-	},
 	Subcommands: []cli.Command{
 		{
 			Name:    "create",
@@ -51,9 +49,10 @@ var CmdTask = cli.Command{
 			Action:  runAction,
 		},
 		{
-			Name:   "purge",
-			Usage:  "remove all tasks",
-			Action: purgeAction,
+			Name:    "purge",
+			Aliases: []string{"p"},
+			Usage:   "remove all tasks",
+			Action:  purgeAction,
 		},
 	},
 }
@@ -97,6 +96,7 @@ func runAction(c *cli.Context) {
 	}
 	out, err := exec.Command("/bin/bash", "-c", task.Command).CombinedOutput()
 	if err != nil {
+		fmt.Printf(string(out))
 		log.Fatal(err)
 	}
 	fmt.Printf(string(out))
