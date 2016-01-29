@@ -1,5 +1,3 @@
-# okgo
-
 ![logo](https://cloud.githubusercontent.com/assets/822951/12686689/13537922-c6c3-11e5-9420-93824fd63928.png)
 
 Schedule everything
