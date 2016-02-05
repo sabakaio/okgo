@@ -15,7 +15,7 @@ import (
 // CmdJob - job specific commands
 var CmdJob = cli.Command{
 	Name:        "job",
-	Aliases:     []string{"t"},
+	Aliases:     []string{"j"},
 	Usage:       "manage jobs - create, list, remove, run, purge",
 	Description: `Subcommands set for managing jobs`,
 	Action:      cli.ShowSubcommandHelp,
