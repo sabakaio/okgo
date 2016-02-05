@@ -13,42 +13,42 @@ func CreateServer() (r *gin.Engine) {
 	})
 	v1 := r.Group("api/v1")
 	{
-		v1.GET("/tasks", getTasks)
-		v1.GET("/tasks/:name", getTask)
-		v1.POST("/tasks", createTask)
-		v1.DELETE("/tasks/:name", deleteTask)
+		v1.GET("/jobs", getJobs)
+		v1.GET("/jobs/:name", getJob)
+		v1.POST("/jobs", createJob)
+		v1.DELETE("/jobs/:name", deleteJob)
 	}
 	return
 }
 
-func getTasks(c *gin.Context) {
-	tasks, err := models.ListTasks()
+func getJobs(c *gin.Context) {
+	jobs, err := models.ListJobs()
 	if err != nil {
 		c.JSON(400, err.Error())
 	}
-	c.JSON(200, *tasks)
+	c.JSON(200, *jobs)
 }
 
-func getTask(c *gin.Context) {
-	task, err := models.GetTask(c.Param("name"))
+func getJob(c *gin.Context) {
+	job, err := models.GetJob(c.Param("name"))
 	if err != nil {
 		c.JSON(404, err.Error())
 	}
-	c.JSON(200, *task)
+	c.JSON(200, *job)
 }
 
-func createTask(c *gin.Context) {
-	var t models.Task
+func createJob(c *gin.Context) {
+	var t models.Job
 	if c.BindJSON(&t) == nil {
-		models.CreateTask(t.Name, t.Command)
+		models.CreateJob(t.Name, t.Command)
 	} else {
 		c.JSON(400, "Bad request")
 	}
 	c.JSON(200, t)
 }
 
-func deleteTask(c *gin.Context) {
-	err := models.RemoveTask(c.Param("name"))
+func deleteJob(c *gin.Context) {
+	err := models.RemoveJob(c.Param("name"))
 	if err != nil {
 		c.JSON(400, err.Error())
 	}

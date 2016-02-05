@@ -12,89 +12,90 @@ import (
 	"github.com/evindor/okgo/models"
 )
 
-// CmdTask - task specific commands
-var CmdTask = cli.Command{
-	Name:        "task",
+// CmdJob - job specific commands
+var CmdJob = cli.Command{
+	Name:        "job",
 	Aliases:     []string{"t"},
-	Usage:       "manage tasks - create, list, remove, run, purge",
-	Description: `Subcommands set for managing tasks`,
+	Usage:       "manage jobs - create, list, remove, run, purge",
+	Description: `Subcommands set for managing jobs`,
 	Action:      cli.ShowSubcommandHelp,
 	Subcommands: []cli.Command{
 		{
 			Name:    "create",
 			Aliases: []string{"c"},
-			Usage:   "create a new task",
+			Usage:   "create a new job",
 			Action:  createAction,
 			Flags: []cli.Flag{
-				stringFlag("name, n", "default", "Task name"),
+				stringFlag("name, n", "default", "Job name"),
 				stringFlag("command, c", "echo \"ok\"", "Command to execute"),
+				cli.StringSliceFlag
 			},
 		},
 		{
 			Name:    "list",
 			Aliases: []string{"ls"},
-			Usage:   "list all defined tasks",
+			Usage:   "list all defined jobs",
 			Action:  listAction,
 		},
 		{
 			Name:    "remove",
 			Aliases: []string{"rm"},
-			Usage:   "remove an existing task",
+			Usage:   "remove an existing job",
 			Action:  removeAction,
 		},
 		{
 			Name:    "run",
 			Aliases: []string{"r"},
-			Usage:   "run a task",
+			Usage:   "run a job",
 			Action:  runAction,
 		},
 		{
 			Name:    "purge",
 			Aliases: []string{"p"},
-			Usage:   "remove all tasks",
+			Usage:   "remove all jobs",
 			Action:  purgeAction,
 		},
 	},
 }
 
 func createAction(c *cli.Context) {
-	task, err := models.CreateTask(c.String("name"), c.String("command"))
+	job, err := models.CreateJob(c.String("name"), c.String("command"))
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("Created task", task.Name)
+	fmt.Println("Created job", job.Name)
 }
 
 func listAction(c *cli.Context) {
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
-	tasks, err := models.ListTasks()
+	jobs, err := models.ListJobs()
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Fprintln(w, "Name\tCommand")
-	for _, task := range *tasks {
-		fmt.Fprintf(w, "%v\t%v\n", task.Name, task.Command)
+	for _, job := range *jobs {
+		fmt.Fprintf(w, "%v\t%v\n", job.Name, job.Command)
 	}
 	w.Flush()
 }
 
 func removeAction(c *cli.Context) {
-	models.RemoveTask(c.Args().First())
-	println("removed task ", c.Args().First())
+	models.RemoveJob(c.Args().First())
+	println("removed job ", c.Args().First())
 }
 
 func purgeAction(c *cli.Context) {
-	models.PurgeTasks()
-	println("removed task ", c.Args().First())
+	models.PurgeJobs()
+	println("removed job ", c.Args().First())
 }
 
 func runAction(c *cli.Context) {
-	task, err := models.GetTask(c.Args().First())
+	job, err := models.GetJob(c.Args().First())
 	if err != nil {
 		log.Fatal(err)
 	}
-	out, err := exec.Command("/bin/bash", "-c", task.Command).CombinedOutput()
+	out, err := exec.Command("/bin/bash", "-c", job.Command).CombinedOutput()
 	if err != nil {
 		fmt.Printf(string(out))
 		log.Fatal(err)

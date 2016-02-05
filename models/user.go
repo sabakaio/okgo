@@ -5,10 +5,10 @@ import (
 	"github.com/docker/libkv/store"
 )
 
-// Job - job definition
-type Job struct {
-	Name    string `json:"name"`
-	Command string `json:"command"`
+// Token - Token model
+type Token struct {
+	Name  string `json:"name"`
+	Token string `json:null`
 }
 
 // CreateJob - creates a Job and saves it to KV

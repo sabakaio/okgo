@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/codegangsta/cli"
+	"github.com/evindor/okgo/Godeps/_workspace/src/github.com/codegangsta/cli"
 
 	"github.com/evindor/okgo/cmd"
 )
@@ -17,7 +17,7 @@ func main() {
 
 	app.Commands = []cli.Command{
 		cmd.CmdServer,
-		cmd.CmdTask,
+		cmd.CmdJob,
 	}
 
 	app.Run(os.Args)

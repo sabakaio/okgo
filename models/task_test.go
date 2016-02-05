@@ -4,43 +4,43 @@ import (
 	"testing"
 )
 
-func TestCreateTask(t *testing.T) {
-	task, err := CreateTask("test", "command")
+func TestCreateJob(t *testing.T) {
+	job, err := CreateJob("test", "command")
 	if err != nil {
 		t.Error(err)
 	}
-	if task.Name != "test" {
-		t.Errorf("error creating task")
+	if job.Name != "test" {
+		t.Errorf("error creating job")
 	}
 }
 
-func TestListTasks(t *testing.T) {
-	tasks, err := ListTasks()
+func TestListJobs(t *testing.T) {
+	jobs, err := ListJobs()
 	if err != nil {
 		t.Error(err)
 	}
-	if len(*tasks) != 1 {
-		t.Errorf("error listing tasks")
+	if len(*jobs) != 1 {
+		t.Errorf("error listing jobs")
 	}
 }
 
-func TestGetTask(t *testing.T) {
-	task, err := GetTask("test")
+func TestGetJob(t *testing.T) {
+	job, err := GetJob("test")
 	if err != nil {
 		t.Error(err)
 	}
-	if task.Command != "command" {
-		t.Errorf("error getting task")
+	if job.Command != "command" {
+		t.Errorf("error getting job")
 	}
 }
 
-func TestRemoveTask(t *testing.T) {
-	err := RemoveTask("test")
+func TestRemoveJob(t *testing.T) {
+	err := RemoveJob("test")
 	if err != nil {
 		t.Error(err)
 	}
 	_, err = kv.Get("test")
 	if err == nil {
-		t.Error("task was not removed")
+		t.Error("job was not removed")
 	}
 }
