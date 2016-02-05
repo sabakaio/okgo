@@ -28,7 +28,6 @@ var CmdJob = cli.Command{
 			Flags: []cli.Flag{
 				stringFlag("name, n", "default", "Job name"),
 				stringFlag("command, c", "echo \"ok\"", "Command to execute"),
-				cli.StringSliceFlag
 			},
 		},
 		{
