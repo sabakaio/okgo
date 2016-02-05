@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/evindor/okgo/Godeps/_workspace/src/github.com/codegangsta/cli"
+	"github.com/codegangsta/cli"
 
 	"github.com/evindor/okgo/cmd"
 )
