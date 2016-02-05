@@ -1,7 +1,7 @@
 package api
 
 import (
-	"github.com/evindor/okgo/models"
+	"../models"
 	"github.com/gin-gonic/gin"
 )
 

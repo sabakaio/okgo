@@ -1,9 +1,8 @@
 package cmd
 
 import (
+	"../api"
 	"github.com/codegangsta/cli"
-
-	"github.com/evindor/okgo/api"
 )
 
 // CmdServer - start a server

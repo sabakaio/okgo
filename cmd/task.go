@@ -9,7 +9,7 @@ import (
 
 	"github.com/codegangsta/cli"
 
-	"github.com/evindor/okgo/models"
+	"../models"
 )
 
 // CmdJob - job specific commands

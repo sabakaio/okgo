@@ -1,11 +1,9 @@
 package main
 
 import (
-	"os"
-
+	"./cmd"
 	"github.com/codegangsta/cli"
-
-	"github.com/evindor/okgo/cmd"
+	"os"
 )
 
 func main() {
