@@ -40,7 +40,7 @@ func getJob(c *gin.Context) {
 func createJob(c *gin.Context) {
 	var t models.Job
 	if c.BindJSON(&t) == nil {
-		models.CreateJob(t.Name, t.Command)
+		models.CreateJob(t.Name, t.Command, "")
 	} else {
 		c.JSON(400, "Bad request")
 	}

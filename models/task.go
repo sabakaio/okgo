@@ -3,25 +3,36 @@ package models
 import (
 	"encoding/json"
 	"github.com/docker/libkv/store"
+	"strings"
 )
 
 // Job - job definition
 type Job struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`
+	When    string
+	Once    bool
 }
 
 // CreateJob - creates a Job and saves it to KV
-func CreateJob(name string, command string) (*Job, error) {
-	job := Job{name, command}
-	jsonStr, err := json.Marshal(job)
-
-	if err != nil {
-		return nil, err
+func CreateJob(name string, command string, schedule string) (job *Job, err error) {
+	once := false
+	schedule = strings.TrimSpace(schedule)
+	if schedule == "" || strings.Contains(schedule, "once") {
+		once = true
+	}
+	job = &Job{
+		Name:    name,
+		Command: command,
+		Once:    once,
 	}
 
-	kv.Put("jobs/"+name, jsonStr, &store.WriteOptions{IsDir: true})
-	return &job, nil
+	jsonStr, err := json.Marshal(job)
+	if err != nil {
+		return
+	}
+	err = kv.Put("jobs/"+name, jsonStr, &store.WriteOptions{IsDir: true})
+	return
 }
 
 // ListJobs - returns all jobs

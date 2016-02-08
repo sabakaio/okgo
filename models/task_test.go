@@ -11,10 +11,11 @@ func TestJobModel(t *testing.T) {
 
 		jobName := "a_test_job"
 
-		job, err := CreateJob(jobName, "command")
+		job, err := CreateJob(jobName, "command", "")
 		So(err, ShouldBeNil)
 		So(job.Name, ShouldEqual, jobName)
 		So(job.Command, ShouldEqual, "command")
+		So(job.Once, ShouldBeTrue)
 
 		Convey("Get", func() {
 			job, err := GetJob(jobName)

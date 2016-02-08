@@ -28,6 +28,7 @@ var CmdJob = cli.Command{
 			Flags: []cli.Flag{
 				stringFlag("name, n", "default", "Job name"),
 				stringFlag("command, c", "echo \"ok\"", "Command to execute"),
+				stringFlag("schedule, s", "once", "Execution schedule (e.g. 'every 2 hours'"),
 			},
 		},
 		{
