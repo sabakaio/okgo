@@ -1,46 +1,41 @@
 package models
 
 import (
+	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )
 
-func TestCreateJob(t *testing.T) {
-	job, err := CreateJob("test", "command")
-	if err != nil {
-		t.Error(err)
-	}
-	if job.Name != "test" {
-		t.Errorf("error creating job")
-	}
-}
+func TestJobModel(t *testing.T) {
+	Convey("Job model operations", t, func() {
+		// TODO Use test storage, reset data before running tests
 
-func TestListJobs(t *testing.T) {
-	jobs, err := ListJobs()
-	if err != nil {
-		t.Error(err)
-	}
-	if len(*jobs) != 1 {
-		t.Errorf("error listing jobs")
-	}
-}
+		jobName := "a_test_job"
 
-func TestGetJob(t *testing.T) {
-	job, err := GetJob("test")
-	if err != nil {
-		t.Error(err)
-	}
-	if job.Command != "command" {
-		t.Errorf("error getting job")
-	}
-}
+		job, err := CreateJob(jobName, "command")
+		So(err, ShouldBeNil)
+		So(job.Name, ShouldEqual, jobName)
+		So(job.Command, ShouldEqual, "command")
 
-func TestRemoveJob(t *testing.T) {
-	err := RemoveJob("test")
-	if err != nil {
-		t.Error(err)
-	}
-	_, err = kv.Get("test")
-	if err == nil {
-		t.Error("job was not removed")
-	}
+		Convey("Get", func() {
+			job, err := GetJob(jobName)
+			So(err, ShouldBeNil)
+			So(job.Command, ShouldEqual, "command")
+		})
+
+		Convey("List", func() {
+			jobs, err := ListJobs()
+			So(err, ShouldBeNil)
+			// Greater than 1, because we do not reset storage yet
+			// TODO reset storage and assert 1 job in a list
+			So(len(*jobs), ShouldBeGreaterThanOrEqualTo, 1)
+		})
+
+		Convey("Remove", func() {
+			err := RemoveJob(jobName)
+			So(err, ShouldBeNil)
+			job, err := kv.Get("test")
+			So(job, ShouldBeNil)
+			So(err, ShouldNotBeNil)
+		})
+	})
 }
