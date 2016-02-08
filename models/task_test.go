@@ -21,6 +21,7 @@ func TestJobModel(t *testing.T) {
 			job, err := GetJob(jobName)
 			So(err, ShouldBeNil)
 			So(job.Command, ShouldEqual, "command")
+			So(job.Once, ShouldBeTrue)
 		})
 
 		Convey("List", func() {
