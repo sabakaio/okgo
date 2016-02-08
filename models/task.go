@@ -10,8 +10,8 @@ import (
 type Job struct {
 	Name    string `json:"name"`
 	Command string `json:"command"`
-	When    string
-	Once    bool
+	When    string `json:"when"`
+	Once    bool   `json:"once"`
 }
 
 // CreateJob - creates a Job and saves it to KV
