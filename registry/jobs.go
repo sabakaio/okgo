@@ -17,6 +17,16 @@ func NewJobsRegistry() *JobsRegistry {
 	}
 }
 
+// Create and put into storage new Job model
+func (r *JobsRegistry) Create(name string, command string, schedule string) (*models.Job, error) {
+	job := models.NewJob(name, command, schedule)
+	err := r.Put(job)
+	if err != nil {
+		return nil, err
+	}
+	return job, nil
+}
+
 // Get a model from registry by name
 func (r *JobsRegistry) Get(name string) (job *models.Job, err error) {
 	value, err := r.get(name)
