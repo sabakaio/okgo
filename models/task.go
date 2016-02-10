@@ -34,7 +34,7 @@ func NewJob(name string, command string, schedule string) *Job {
 	return job
 }
 
-func UnmarshallJob(data []byte) (*Job, error) {
+func UnmarshalJob(data []byte) (*Job, error) {
 	job := &Job{}
 	err := job.Unmarshal(data)
 	if err != nil {
