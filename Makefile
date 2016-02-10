@@ -11,3 +11,4 @@ deps:
 
 test:
 	go test -v ./models
+	go test -v ./registry
