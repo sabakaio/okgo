@@ -7,6 +7,7 @@ import (
 )
 
 type Model interface {
+	GetName() string
 	Marshal() ([]byte, error)
 	Unmarshal([]byte) error
 }
@@ -40,6 +41,10 @@ func UnmarshallJob(data []byte) (*Job, error) {
 		return nil, err
 	}
 	return job, nil
+}
+
+func (j *Job) GetName() string {
+	return j.Name
 }
 
 func (j *Job) Marshal() ([]byte, error) {
