@@ -6,6 +6,15 @@ import (
 )
 
 func TestJobModel(t *testing.T) {
+	Convey("Job model", t, func() {
+		job := NewJob("a_job", "echo ok", "")
+		data, err := job.Marshal()
+		So(err, ShouldBeNil)
+		res, err := UnmarshallJob(data)
+		So(err, ShouldBeNil)
+		So(res.Command, ShouldEqual, job.Command)
+	})
+
 	Convey("Job model operations", t, func() {
 		// TODO Use test storage, reset data before running tests
 
