@@ -2,9 +2,14 @@ package models
 
 import (
 	"encoding/json"
-	"github.com/docker/libkv/store"
 	"strings"
 )
+
+type Model interface {
+	GetName() string
+	Marshal() ([]byte, error)
+	Unmarshal([]byte) error
+}
 
 // Job - job definition
 type Job struct {
@@ -14,79 +19,38 @@ type Job struct {
 	Once    bool   `json:"once"`
 }
 
-// CreateJob - creates a Job and saves it to KV
-func CreateJob(name string, command string, schedule string) (job *Job, err error) {
+func NewJob(name string, command string, schedule string) *Job {
 	once := false
 	schedule = strings.TrimSpace(schedule)
 	if schedule == "" || strings.Contains(schedule, "once") {
 		once = true
 	}
-	job = &Job{
+	job := &Job{
 		Name:    name,
 		Command: command,
 		Once:    once,
 	}
-
-	jsonStr, err := json.Marshal(job)
-	if err != nil {
-		return
-	}
-	err = kv.Put("jobs/"+name, jsonStr, &store.WriteOptions{IsDir: true})
-	return
+	return job
 }
 
-// ListJobs - returns all jobs
-func ListJobs() (*[]Job, error) {
-	var t []Job
-	jobs, err := kv.List("jobs")
-	if err != nil {
-		return &t, nil
-	}
-
-	for _, job := range jobs {
-		var _t = Job{}
-		json.Unmarshal(job.Value, &_t)
-		t = append(t, _t)
-	}
-
+func UnmarshalJob(data []byte) (*Job, error) {
+	job := &Job{}
+	err := job.Unmarshal(data)
 	if err != nil {
 		return nil, err
 	}
-
-	return &t, nil
+	return job, nil
 }
 
-// GetJob - get a job by name
-func GetJob(name string) (*Job, error) {
-	var t Job
-	job, err := kv.Get("jobs/" + name)
-	if err != nil {
-		return nil, err
-	}
-
-	err = json.Unmarshal(job.Value, &t)
-
-	if err != nil {
-		return nil, err
-	}
-
-	return &t, nil
+func (j *Job) GetName() string {
+	return j.Name
 }
 
-// RemoveJob - removes a job by name
-func RemoveJob(name string) error {
-	err := kv.Delete("jobs/" + name)
-	if err != nil {
-		return err
-	}
-	return nil
+func (j *Job) Marshal() ([]byte, error) {
+	data, err := json.Marshal(*j)
+	return data, err
 }
 
-// PurgeJobs - removes a job by name
-func PurgeJobs() error {
-	err := kv.DeleteTree("jobs/")
-	if err != nil {
-		return err
-	}
-	return nil
+func (j *Job) Unmarshal(data []byte) error {
+	return json.Unmarshal(data, j)
 }

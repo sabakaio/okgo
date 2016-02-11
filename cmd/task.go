@@ -8,8 +8,6 @@ import (
 	"text/tabwriter"
 
 	"github.com/codegangsta/cli"
-
-	"../models"
 )
 
 // CmdJob - job specific commands
@@ -59,7 +57,7 @@ var CmdJob = cli.Command{
 }
 
 func createAction(c *cli.Context) {
-	job, err := models.CreateJob(c.String("name"), c.String("command"))
+	job, err := jobs.Create(c.String("name"), c.String("command"), "")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -69,29 +67,29 @@ func createAction(c *cli.Context) {
 func listAction(c *cli.Context) {
 	w := new(tabwriter.Writer)
 	w.Init(os.Stdout, 0, 8, 0, '\t', 0)
-	jobs, err := models.ListJobs()
+	jobs, err := jobs.List()
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Fprintln(w, "Name\tCommand")
-	for _, job := range *jobs {
+	for _, job := range jobs {
 		fmt.Fprintf(w, "%v\t%v\n", job.Name, job.Command)
 	}
 	w.Flush()
 }
 
 func removeAction(c *cli.Context) {
-	models.RemoveJob(c.Args().First())
+	jobs.Delete(c.Args().First())
 	println("removed job ", c.Args().First())
 }
 
 func purgeAction(c *cli.Context) {
-	models.PurgeJobs()
+	jobs.DeleteAll()
 	println("removed job ", c.Args().First())
 }
 
 func runAction(c *cli.Context) {
-	job, err := models.GetJob(c.Args().First())
+	job, err := jobs.Get(c.Args().First())
 	if err != nil {
 		log.Fatal(err)
 	}
