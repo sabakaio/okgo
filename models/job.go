@@ -5,12 +5,6 @@ import (
 	"strings"
 )
 
-type Model interface {
-	GetName() string
-	Marshal() ([]byte, error)
-	Unmarshal([]byte) error
-}
-
 // Job - job definition
 type Job struct {
 	Name    string `json:"name"`

@@ -1,9 +1,14 @@
 package registry
 
 import (
-	"../models"
 	"github.com/docker/libkv/store"
 )
+
+type Model interface {
+	GetName() string
+	Marshal() ([]byte, error)
+	Unmarshal([]byte) error
+}
 
 // Common models storage
 type Registry struct {
@@ -26,7 +31,7 @@ func (r *Registry) options() *store.WriteOptions {
 }
 
 // Put model data into key-value storage in JSON-serialized format
-func (r *Registry) Put(model models.Model) (err error) {
+func (r *Registry) Put(model Model) (err error) {
 	data, err := model.Marshal()
 	if err != nil {
 		return
