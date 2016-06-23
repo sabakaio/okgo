@@ -1,5 +1,3 @@
-![logo](/logo.png)
-
 Schedule everything
 
 ## Usage
