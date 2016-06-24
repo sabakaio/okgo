@@ -1,8 +1,8 @@
 package main
 
 import (
-	"./cmd"
 	"github.com/codegangsta/cli"
+	"github.com/sabakaio/okgo/cmd"
 	"os"
 )
 

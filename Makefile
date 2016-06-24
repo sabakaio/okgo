@@ -3,7 +3,6 @@ dev:
 	go get -u github.com/rogpeppe/godef
 
 deps:
-	go get -u github.com/constabulary/gb/...
 	go get -u github.com/smartystreets/goconvey
 	go get github.com/codegangsta/cli
 	go get github.com/gin-gonic/gin

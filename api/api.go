@@ -1,9 +1,9 @@
 package api
 
 import (
-	"../models"
-	"../registry"
 	"github.com/gin-gonic/gin"
+	"github.com/sabakaio/okgo/models"
+	"github.com/sabakaio/okgo/registry"
 )
 
 var jobs *registry.JobsRegistry

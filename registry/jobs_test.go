@@ -1,7 +1,7 @@
 package registry
 
 import (
-	"../models"
+	"github.com/sabakaio/okgo/models"
 	. "github.com/smartystreets/goconvey/convey"
 	"testing"
 )

@@ -1,8 +1,8 @@
 package cmd
 
 import (
-	"../registry"
 	"github.com/codegangsta/cli"
+	"github.com/sabakaio/okgo/registry"
 )
 
 var jobs *registry.JobsRegistry
