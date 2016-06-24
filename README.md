@@ -3,17 +3,17 @@ Schedule everything
 ## Usage
 ```
 NAME:
-   okgo task - work with okgo tasks
+   okgo job - work with okgo jobs
 
 USAGE:
-   okgo task command [command options] [arguments...]
+   okgo job command [command options] [arguments...]
 
 COMMANDS:
-   create, c  create a new task
-   list, ls list all defined tasks
-   remove, rm remove an existing task
-   run, r run a task
-   purge  remove all tasks
+   create, c  create a new job
+   list, ls list all defined jobs
+   remove, rm remove an existing job
+   run, r run a job
+   purge  remove all jobs
    help, h  Shows a list of commands or help for one command
 ```
 
@@ -24,8 +24,8 @@ $ okgo server
 ```
 Use API
 ```
-GET    /api/v1/tasks         List all tasks
-GET    /api/v1/tasks/:name   Get task by name
-POST   /api/v1/tasks         Create a new task {"name": "...", "command": "..."}
-DELETE /tasks/:name          Delete a task by name
+GET    /api/v1/jobs         List all jobs
+GET    /api/v1/jobs/:name   Get job by name
+POST   /api/v1/jobs         Create a new job {"name": "...", "command": "..."}
+DELETE /jobs/:name          Delete a job by name
 ```
